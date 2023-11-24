@@ -535,25 +535,49 @@ function encodeToRot13(str) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(/* value */) {
-  // let suitOfCard = [
-  //   'A',
-  //   '2',
-  //   '3',
-  //   '4',
-  //   '5',
-  //   '6',
-  //   '7',
-  //   '8',
-  //   '9',
-  //   '10',
-  //   'J',
-  //   'Q',
-  //   'K',
-  // ];
-  // let clubs = charCodeAt(1F0Ax);
-  // console.log(clubs);
-  // let suit = [clubs, diamonds, hearts, spades]
+function getCardId(value) {
+  const suitOfCard = [
+    'A',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '1',
+    'J',
+    'Q',
+    'K',
+  ];
+  let val = value;
+  if (value.length > 2) {
+    val = value[0] + value[2];
+  }
+  const r = '♣♦♥♠';
+  const clubs = r.charCodeAt(0);
+  const diamonds = r.charCodeAt(1);
+  const hearts = r.charCodeAt(2);
+  const spades = r.charCodeAt(3);
+
+  const suitOfValue = val.charCodeAt(1);
+
+  const suit = [clubs, diamonds, hearts, spades];
+
+  const firstPart = suit.indexOf(suitOfValue);
+  const secondPart = suitOfCard.indexOf(val[0]);
+
+  let sum = firstPart + secondPart;
+
+  if (suitOfValue === diamonds) {
+    sum += 12;
+  } else if (suitOfValue === hearts) {
+    sum += 24;
+  } else if (suitOfValue === spades) {
+    sum += 36;
+  }
+  return sum;
 }
 
 module.exports = {
